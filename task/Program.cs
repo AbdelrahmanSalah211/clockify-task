@@ -37,6 +37,7 @@ builder.Services.AddScoped<ITimeEntryRepository, TimeEntryRepository>();
 builder.Services.AddHttpClient<ITimeEntryService, TimeEntryService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddHttpClient<IProjectService, ProjectService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 var app = builder.Build();
 
