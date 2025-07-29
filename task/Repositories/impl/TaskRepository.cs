@@ -18,5 +18,11 @@ namespace task.Repositories
             await _context.SaveChangesAsync();
             return task;
         }
+
+        public async Task<Models.Task> SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+            return _context.Tasks.Local.FirstOrDefault();
+        }
     }
 }
