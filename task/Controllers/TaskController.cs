@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using task.Models;
 using task.Services;
 using Task = task.Models.Task;
+using task.DTOs;
 
 namespace task.Controllers
 {
@@ -18,12 +19,20 @@ namespace task.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateTask([FromBody] Task task)
+    public async Task<IActionResult> CreateTask([FromBody] CreateTaskDto dto)
     {
-      if (task == null || string.IsNullOrEmpty(task.Name))
+      if (dto == null || string.IsNullOrEmpty(dto.Name))
       {
         return BadRequest("Invalid task data.");
       }
+
+      var task = new Task
+      {
+        Name = dto.Name,
+        EstimatedHours = dto.EstimatedHours,
+        UserId = dto.UserId,
+        ProjectId = dto.ProjectId
+      };
 
       var createdTask = await _taskService.CreateTaskAsync(task);
       return CreatedAtAction(nameof(CreateTask), new { id = createdTask.Id }, createdTask);

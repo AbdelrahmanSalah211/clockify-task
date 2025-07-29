@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using task.Models;
 using task.Services;
+using task.DTOs;
 
 namespace task.Controllers
 {
@@ -17,12 +18,18 @@ namespace task.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProject([FromBody] Project project)
+    public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto dto)
     {
-      if (project == null || string.IsNullOrEmpty(project.Name))
+      if (dto == null || string.IsNullOrEmpty(dto.Name))
       {
         return BadRequest("Invalid Project data.");
       }
+
+      var project = new Project
+      {
+        Name = dto.Name,
+        ClockifyId = dto.ClockifyId
+      };
 
       var createdProject = await _projectService.CreateProjectAsync(project);
       return CreatedAtAction(nameof(CreateProject), new { id = createdProject.Id }, createdProject);
