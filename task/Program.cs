@@ -28,8 +28,6 @@ builder.Services.AddSingleton(sp =>
   builder.Configuration.GetSection("Clockify").Get<ClockifySettings>());
 
 
-builder.Services.AddHttpClient<ClockifyService>();
-
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
