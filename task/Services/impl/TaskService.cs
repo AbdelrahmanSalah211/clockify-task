@@ -50,6 +50,9 @@ namespace task.Services
                 var error = await response.Content.ReadAsStringAsync();
                 throw new Exception($"Clockify API error {response.StatusCode}: {error}");
             }
+            var json = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
+            task.ClockifyTaskId = json?["id"]?.ToString();
+            await _taskRepository.SaveChangesAsync();
             return task;
         }
 
