@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using task.Models;
 using task.Services;
+using task.DTOs;
 
 namespace task.Controllers
 {
@@ -17,12 +18,21 @@ namespace task.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateTimeEntry([FromBody] TimeEntry timeEntry)
+    public async Task<IActionResult> CreateTimeEntry([FromBody] CreateTimeEntryDto dto)
     {
-      if (timeEntry == null)
+      if (dto == null)
       {
         return BadRequest("Invalid time entry data.");
       }
+
+      var timeEntry = new TimeEntry
+      {
+        Start = dto.Start,
+        End = dto.End,
+        UserId = dto.UserId,
+        TaskId = dto.TaskId,
+        ProjectId = dto.ProjectId
+      };
 
       var createdTimeEntry = await _timeEntryService.CreateTimeEntryAsync(timeEntry);
       return CreatedAtAction(nameof(CreateTimeEntry), new { id = createdTimeEntry.Id }, createdTimeEntry);
