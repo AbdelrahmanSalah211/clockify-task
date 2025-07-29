@@ -18,5 +18,10 @@ namespace task.Repositories
             await _context.SaveChangesAsync();
             return user;
         }
+
+        public async Task<User?> GetByIdAsync(int id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
     }
 }
