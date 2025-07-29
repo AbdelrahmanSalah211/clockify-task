@@ -12,7 +12,7 @@ namespace task.Repositories
             _context = context;
         }
 
-        public async Task<TimeEntry> CreateAsync(TimeEntry timeEntry)
+        public async Task<TimeEntry> CreateTimeEntryAsync(TimeEntry timeEntry)
         {
             _context.TimeEntries.Add(timeEntry);
             await _context.SaveChangesAsync();
