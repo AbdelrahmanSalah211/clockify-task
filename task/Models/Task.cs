@@ -9,7 +9,7 @@ namespace task.Models
     public required int EstimatedHours { get; set; }
     public int UserId { get; set; }
     public int ProjectId { get; set; }
-    public required Project Project { get; set; }
-    public required User User { get; set; }
+    public Project? Project { get; set; }
+    public User? User { get; set; }
   }
 }
