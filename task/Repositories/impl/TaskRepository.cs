@@ -24,5 +24,10 @@ namespace task.Repositories
             await _context.SaveChangesAsync();
             return _context.Tasks.Local.FirstOrDefault();
         }
+
+        public async Task<Models.Task> GetByIdAsync(int id)
+        {
+            return await _context.Tasks.FindAsync(id);
+        }
     }
 }
