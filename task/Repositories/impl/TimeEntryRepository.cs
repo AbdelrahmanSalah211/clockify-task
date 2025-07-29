@@ -18,5 +18,11 @@ namespace task.Repositories
             await _context.SaveChangesAsync();
             return timeEntry;
         }
+
+        public async Task<TimeEntry> SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+            return _context.TimeEntries.Local.FirstOrDefault();
+        }
     }
 }
