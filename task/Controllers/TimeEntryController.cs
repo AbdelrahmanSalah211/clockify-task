@@ -19,7 +19,7 @@ namespace task.Controllers
     [HttpPost]
     public async Task<IActionResult> CreateTimeEntry([FromBody] TimeEntry timeEntry)
     {
-      if (timeEntry == null || string.IsNullOrEmpty(timeEntry.User.Name))
+      if (timeEntry == null)
       {
         return BadRequest("Invalid time entry data.");
       }
