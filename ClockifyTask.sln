@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClockifyTask.API", "ClockifyTask.API\ClockifyTask.API.csproj", "{4EEF6BA6-48DA-479D-9349-B1B52652DAD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClockifyTask.Application", "ClockifyTask.Application\ClockifyTask.Application.csproj", "{0D7ABE18-CD9F-4833-9434-63BF676A2515}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClockifyTask.Infrastructure", "ClockifyTask.Infrastructure\ClockifyTask.Infrastructure.csproj", "{66D8919B-9810-4B5A-9E40-C570E89630A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClockifyTask.Domain", "ClockifyTask.Domain\ClockifyTask.Domain.csproj", "{7AF55996-8B9C-40CE-A8AB-97D05BA1217E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EEF6BA6-48DA-479D-9349-B1B52652DAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EEF6BA6-48DA-479D-9349-B1B52652DAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EEF6BA6-48DA-479D-9349-B1B52652DAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EEF6BA6-48DA-479D-9349-B1B52652DAD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D7ABE18-CD9F-4833-9434-63BF676A2515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D7ABE18-CD9F-4833-9434-63BF676A2515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D7ABE18-CD9F-4833-9434-63BF676A2515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D7ABE18-CD9F-4833-9434-63BF676A2515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D8919B-9810-4B5A-9E40-C570E89630A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D8919B-9810-4B5A-9E40-C570E89630A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D8919B-9810-4B5A-9E40-C570E89630A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D8919B-9810-4B5A-9E40-C570E89630A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AF55996-8B9C-40CE-A8AB-97D05BA1217E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF55996-8B9C-40CE-A8AB-97D05BA1217E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF55996-8B9C-40CE-A8AB-97D05BA1217E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF55996-8B9C-40CE-A8AB-97D05BA1217E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

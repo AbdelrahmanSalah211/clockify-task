@@ -1,0 +1,6 @@
+@ClockifyTask.API_HostAddress = http://localhost:5145
+
+GET {{ClockifyTask.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
