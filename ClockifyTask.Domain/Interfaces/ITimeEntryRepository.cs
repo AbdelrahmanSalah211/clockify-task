@@ -6,6 +6,6 @@ namespace ClockifyTask.Domain.Interfaces
     {
         Task<TimeEntry> CreateTimeEntryAsync(TimeEntry timeEntry);
         Task<TimeEntry> SaveChangesAsync();
-        Task<IEnumerable<TimeEntry>> GetAllForReportAsync(); // Added for report generation only
+        Task<IEnumerable<TimeEntry>> GetAllForReportAsync();
     }
 }
