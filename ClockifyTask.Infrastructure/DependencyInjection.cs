@@ -20,7 +20,7 @@ namespace ClockifyTask.Infrastructure
                     configuration.GetConnectionString("DefaultConnection"),
                     ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
 
-            services.AddScoped<ITrackingApiService, ClockifyApiServices>();
+            services.AddScoped<ITrackingApiProvider, ClockifyApiProvider>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITimeEntryRepository, TimeEntryRepository>();
