@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using ClockifyTask.Domain.Entities;
 using ClockifyTask.Application.Interfaces;
 
-namespace ClockifyTask.Infrastructure.Services;
+namespace ClockifyTask.Infrastructure.Providers;
 public class ClockifyApiProvider : ITrackingApiProvider
 {
     private readonly HttpClient _http;
