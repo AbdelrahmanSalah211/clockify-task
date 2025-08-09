@@ -6,7 +6,7 @@ using ClockifyTask.Application.Interfaces;
 using ClockifyTask.Application.Services;
 using ClockifyTask.Domain.Interfaces;
 using ClockifyTask.Infrastructure.Persistence;
-using ClockifyTask.Infrastructure.Services;
+using ClockifyTask.Infrastructure.Providers;
 using ClockifyTask.Domain.Entities;
 
 namespace ClockifyTask.Infrastructure
