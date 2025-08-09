@@ -6,7 +6,7 @@ using ClockifyTask.Application.Interfaces;
 using ClockifyTask.Application.Services;
 using ClockifyTask.Domain.Interfaces;
 using ClockifyTask.Infrastructure.Persistence;
-using ClockifyTask.Infrastructure.Services;
+using ClockifyTask.Infrastructure.Providers;
 using ClockifyTask.Domain.Entities;
 
 namespace ClockifyTask.Infrastructure
@@ -20,7 +20,7 @@ namespace ClockifyTask.Infrastructure
                     configuration.GetConnectionString("DefaultConnection"),
                     ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
 
-            services.AddScoped<ITrackingApiService, ClockifyApiServices>();
+            services.AddScoped<ITrackingApiProvider, ClockifyApiProvider>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITimeEntryRepository, TimeEntryRepository>();

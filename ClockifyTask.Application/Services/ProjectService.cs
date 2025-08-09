@@ -8,12 +8,12 @@ namespace ClockifyTask.Application.Services
     public class ProjectService : IProjectService
     {
         private readonly IProjectRepository _projectRepository;
-        private readonly ITrackingApiService _trackingApiService;
+        private readonly ITrackingApiProvider _trackingApiProvider;
 
-        public ProjectService(IProjectRepository projectRepository, ITrackingApiService trackingApiService)
+        public ProjectService(IProjectRepository projectRepository, ITrackingApiProvider trackingApiProvider)
         {
             _projectRepository = projectRepository;
-            _trackingApiService = trackingApiService;
+            _trackingApiProvider = trackingApiProvider;
         }
 
         public async Task<ProjectDto> CreateProjectAsync(CreateProjectDto projectDto)
@@ -30,7 +30,7 @@ namespace ClockifyTask.Application.Services
             {
                 name = projectDto.Name,
             };
-            project.ClockifyId = await _trackingApiService.CreateTrackingProjectAsync(projectTracking);
+            project.ClockifyId = await _trackingApiProvider.CreateTrackingProjectAsync(projectTracking);
             var result = await _projectRepository.SaveChangesAsync();
 
             return MapToDto(result);
