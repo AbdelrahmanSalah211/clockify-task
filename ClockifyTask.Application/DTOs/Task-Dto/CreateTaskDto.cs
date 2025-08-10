@@ -1,4 +1,5 @@
-namespace ClockifyTask.Application.DTOs.Task_Dto;
+namespace ClockifyTask.Application.DTOs
+{
     public record CreateTaskDto
     {
         public required string Name { get; init; }
@@ -6,3 +7,4 @@ namespace ClockifyTask.Application.DTOs.Task_Dto;
         public int UserId { get; init; }
         public int ProjectId { get; init; }
     }
+}

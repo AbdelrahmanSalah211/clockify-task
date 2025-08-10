@@ -1,7 +1,10 @@
-public record TaskTrackingDto
+namespace ClockifyTask.Application.DTOs
 {
-    public string name { get; set; }
-    public decimal estimatedHours { get; set; }
-    public List<string> assigneeIds { get; set; }
-    public string projectId { get; set; }
+    public record TaskTrackingDto
+    {
+        public string name { get; set; }
+        public decimal estimatedHours { get; set; }
+        public List<string> assigneeIds { get; set; }
+        public string projectId { get; set; }
+    }
 }
