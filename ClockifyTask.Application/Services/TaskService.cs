@@ -32,7 +32,7 @@ namespace ClockifyTask.Application.Services
                 ProjectId = taskDto.ProjectId
             };
 
-            await _taskRepository.CreateTaskAsync(task);
+            await _taskRepository.CreateTaskSync(task);
             
             var project = await _projectRepo.GetByIdAsync(task.ProjectId);
             if (project?.ClockifyId == null)

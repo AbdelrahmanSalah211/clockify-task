@@ -26,7 +26,7 @@ namespace ClockifyTask.Application.Services
                 Name = projectDto.Name,
             };
 
-            await _projectRepository.CreateProjectAsync(project);
+            await _projectRepository.CreateProjectSync(project);
 
             var projectTracking = new ProjectTrackingDto
             {

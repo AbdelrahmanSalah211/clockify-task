@@ -4,7 +4,7 @@ namespace ClockifyTask.Domain.Interfaces
 {
     public interface ITaskRepository
     {
-        Task<Task> CreateTaskAsync(Task task);
+        Task<Task> CreateTaskSync(Task task);
         Task<Task?> GetByIdAsync(int id);
     }
 }

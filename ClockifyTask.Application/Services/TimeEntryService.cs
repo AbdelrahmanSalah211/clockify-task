@@ -27,7 +27,7 @@ namespace ClockifyTask.Application.Services
                 ProjectId = timeEntryDto.ProjectId
             };
 
-            await _unitOfWork.TimeEntries.CreateTimeEntryAsync(timeEntry);
+            await _unitOfWork.TimeEntries.CreateTimeEntrySync(timeEntry);
 
             var task = await _unitOfWork.Tasks.GetByIdAsync(timeEntry.TaskId);
             if (task?.ClockifyTaskId == null)

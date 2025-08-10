@@ -24,7 +24,7 @@ namespace ClockifyTask.Application.Services
                 ClockifyUserId = userDto.ClockifyUserId
             };
 
-            var result = await _userRepository.CreateAsync(user);
+            var result = await _userRepository.CreateUserSync(user);
             await _unitOfWork.SaveChangesAsync();
             return MapToDto(result);
         }

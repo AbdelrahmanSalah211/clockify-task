@@ -4,7 +4,7 @@ namespace ClockifyTask.Domain.Interfaces
 {
     public interface ITimeEntryRepository
     {
-        Task<TimeEntry> CreateTimeEntryAsync(TimeEntry timeEntry);
+        Task<TimeEntry> CreateTimeEntrySync(TimeEntry timeEntry);
         Task<IEnumerable<TimeEntry>> GetAllForReportAsync();
     }
 }
