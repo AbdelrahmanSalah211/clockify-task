@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using ClockifyTask.Domain.Entities;
-using Task = ClockifyTask.Domain.Entities.Task;
 
 
 namespace ClockifyTask.Infrastructure.Persistence
@@ -13,7 +12,7 @@ namespace ClockifyTask.Infrastructure.Persistence
         }
 
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<AssignedTask> AssignedTasks { get; set; }
         public DbSet<TimeEntry> TimeEntries { get; set; }
         public DbSet<User> Users { get; set; }
 
@@ -23,7 +22,7 @@ namespace ClockifyTask.Infrastructure.Persistence
             
             // Project relationships
             modelBuilder.Entity<Project>()
-                .HasMany(p => p.Tasks)
+                .HasMany(p => p.AssignedTasks)
                 .WithOne(t => t.Project)
                 .HasForeignKey(t => t.ProjectId);
 
@@ -34,7 +33,7 @@ namespace ClockifyTask.Infrastructure.Persistence
 
             // User relationships
             modelBuilder.Entity<User>()
-                .HasMany(u => u.Tasks)
+                .HasMany(u => u.AssignedTasks)
                 .WithOne(t => t.User)
                 .HasForeignKey(t => t.UserId);
 
@@ -44,10 +43,10 @@ namespace ClockifyTask.Infrastructure.Persistence
                 .HasForeignKey(t => t.UserId);
 
             // Task relationships
-            modelBuilder.Entity<Task>()
+            modelBuilder.Entity<AssignedTask>()
                 .HasMany<TimeEntry>()
-                .WithOne(t => t.Task)
-                .HasForeignKey(t => t.TaskId);
+                .WithOne(t => t.AssignedTask)
+                .HasForeignKey(t => t.AssignedTaskId);
         }
     }
 }

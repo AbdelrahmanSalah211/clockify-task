@@ -16,15 +16,15 @@ namespace ClockifyTask.Infrastructure.Persistence
         public Task<TimeEntry> CreateTimeEntrySync(TimeEntry timeEntry)
         {
             _context.TimeEntries.Add(timeEntry);
-            return System.Threading.Tasks.Task.FromResult(timeEntry);
+            return Task.FromResult(timeEntry);
         }
 
         public async Task<IEnumerable<TimeEntry>> GetAllForReportAsync()
         {
             return await _context.TimeEntries
                 .Include(t => t.User)
-                .Include(t => t.Task)
-                .ThenInclude(task => task!.Project)
+                .Include(t => t.AssignedTask)
+                .ThenInclude(assignedTask => assignedTask!.Project)
                 .ToListAsync();
         }
     }

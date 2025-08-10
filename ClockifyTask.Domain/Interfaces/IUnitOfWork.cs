@@ -4,7 +4,7 @@ namespace ClockifyTask.Domain.Interfaces
     {
         IProjectRepository Projects { get; }
         IUserRepository Users { get; }
-        ITaskRepository Tasks { get; }
+        IAssignedTaskRepository AssignedTasks { get; }
         ITimeEntryRepository TimeEntries { get; }
         
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

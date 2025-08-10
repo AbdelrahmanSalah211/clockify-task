@@ -23,19 +23,19 @@ namespace ClockifyTask.Application.Services
                 Start = timeEntryDto.Start,
                 End = timeEntryDto.End,
                 UserId = timeEntryDto.UserId,
-                TaskId = timeEntryDto.TaskId,
+                AssignedTaskId = timeEntryDto.AssignedTaskId,
                 ProjectId = timeEntryDto.ProjectId
             };
 
             await _unitOfWork.TimeEntries.CreateTimeEntrySync(timeEntry);
 
-            var task = await _unitOfWork.Tasks.GetByIdAsync(timeEntry.TaskId);
-            if (task?.ClockifyTaskId == null)
+            var assignedTask = await _unitOfWork.AssignedTasks.GetByIdAsync(timeEntry.AssignedTaskId);
+            if (assignedTask?.ClockifyTaskId == null)
             {
                 throw new Exception("Cannot sync time entry to Clockify. Missing Clockify Task ID.");
             }
-            
-            var project = await _unitOfWork.Projects.GetByIdAsync(task.ProjectId);
+
+            var project = await _unitOfWork.Projects.GetByIdAsync(assignedTask.ProjectId);
 
             if (project?.ClockifyId == null)
             {
@@ -47,7 +47,7 @@ namespace ClockifyTask.Application.Services
                 start = timeEntry.Start,
                 end = timeEntry.End,
                 projectId = project.ClockifyId,
-                taskId = task.ClockifyTaskId,
+                assignedTaskId = assignedTask.ClockifyTaskId,
             };
             timeEntry.ClockifyTimeEntryId = await _trackingApiProvider.CreateTrackingTimeEntryAsync(timeEntryTracking);
             await _unitOfWork.SaveChangesAsync();
@@ -64,7 +64,7 @@ namespace ClockifyTask.Application.Services
                 End = timeEntry.End,
                 ClockifyTimeEntryId = timeEntry.ClockifyTimeEntryId,
                 UserId = timeEntry.UserId,
-                TaskId = timeEntry.TaskId,
+                AssignedTaskId = timeEntry.AssignedTaskId,
                 ProjectId = timeEntry.ProjectId
             };
         }

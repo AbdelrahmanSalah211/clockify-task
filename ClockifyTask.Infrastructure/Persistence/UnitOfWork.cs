@@ -8,20 +8,20 @@ namespace ClockifyTask.Infrastructure.Persistence
         private readonly IProjectRepository _projectRepository;
         private readonly ITimeEntryRepository _timeEntryRepository;
         private readonly IUserRepository _userRepository;
-        private readonly ITaskRepository _taskRepository;
+        private readonly IAssignedTaskRepository _assignedTaskRepository;
         private readonly ApplicationDbContext _context;
         private bool _disposed;
         public UnitOfWork(
             IProjectRepository projectRepository,
             ITimeEntryRepository timeEntryRepository,
             IUserRepository userRepository,
-            ITaskRepository taskRepository,
+            IAssignedTaskRepository assignedTaskRepository,
             ApplicationDbContext context)
         {
             _projectRepository = projectRepository;
             _timeEntryRepository = timeEntryRepository;
             _userRepository = userRepository;
-            _taskRepository = taskRepository;
+            _assignedTaskRepository = assignedTaskRepository;
             _context = context;
         }
 
@@ -31,7 +31,7 @@ namespace ClockifyTask.Infrastructure.Persistence
         }
         public IProjectRepository Projects => _projectRepository;
         public IUserRepository Users => _userRepository;
-        public ITaskRepository Tasks => _taskRepository;
+        public IAssignedTaskRepository AssignedTasks => _assignedTaskRepository;
         public ITimeEntryRepository TimeEntries => _timeEntryRepository;
 
         public void Dispose()

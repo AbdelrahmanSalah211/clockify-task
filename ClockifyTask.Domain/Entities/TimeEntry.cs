@@ -7,10 +7,10 @@ namespace ClockifyTask.Domain.Entities
         public DateTime End { get; set; }
         public string? ClockifyTimeEntryId { get; set; }
         public int UserId { get; set; }
-        public int TaskId { get; set; }
+        public int AssignedTaskId { get; set; }
         public int ProjectId { get; set; }
         public User? User { get; set; }
-        public Task? Task { get; set; }
+        public AssignedTask? AssignedTask { get; set; }
         public Project? Project { get; set; }
     }
 }

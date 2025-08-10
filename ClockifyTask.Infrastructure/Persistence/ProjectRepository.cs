@@ -16,7 +16,7 @@ namespace ClockifyTask.Infrastructure.Persistence
         public Task<Project> CreateProjectSync(Project project)
         {
             _context.Projects.Add(project);
-            return System.Threading.Tasks.Task.FromResult(project);
+            return Task.FromResult(project);
         }
 
         public async Task<Project?> GetByIdAsync(int id)

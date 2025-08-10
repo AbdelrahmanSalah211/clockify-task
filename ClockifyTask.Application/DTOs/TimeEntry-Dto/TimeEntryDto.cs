@@ -7,7 +7,7 @@ namespace ClockifyTask.Application.DTOs
         public DateTime End { get; init; }
         public string? ClockifyTimeEntryId { get; init; }
         public int UserId { get; init; }
-        public int TaskId { get; init; }
+        public int AssignedTaskId { get; init; }
         public int ProjectId { get; init; }
     }
 
