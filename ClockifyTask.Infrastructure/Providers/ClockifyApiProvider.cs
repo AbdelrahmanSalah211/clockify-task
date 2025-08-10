@@ -2,15 +2,16 @@
 using System.Net.Http.Json;
 using ClockifyTask.Domain.Entities;
 using ClockifyTask.Application.Interfaces;
+using ClockifyTask.Application.DTOs;
 
-namespace ClockifyTask.Infrastructure.Services;
-public class ClockifyApiServices : ITrackingApiService
+namespace ClockifyTask.Infrastructure.Providers;
+public class ClockifyApiProvider : ITrackingApiProvider
 {
     private readonly HttpClient _http;
     private readonly ClockifySettings _settings;
     private static readonly string BaseUrl = "https://api.clockify.me/api/v1/workspaces";
 
-    public ClockifyApiServices(HttpClient http, ClockifySettings settings)
+    public ClockifyApiProvider(HttpClient http, ClockifySettings settings)
     {
         _http = http;
         _settings = settings;

@@ -19,15 +19,15 @@ namespace ClockifyTask.Infrastructure.Persistence
             return task;
         }
 
-        public async Task<Task> SaveChangesAsync()
+        public async Task<Task?> SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
-            return _context.Tasks.Local.FirstOrDefault() ?? new Task { Name = "", EstimatedHours = 0 };
+            return _context.Tasks.Local.FirstOrDefault();
         }
 
-        public async Task<Task> GetByIdAsync(int id)
+        public async Task<Task?> GetByIdAsync(int id)
         {
-            return await _context.Tasks.FindAsync(id) ?? new Task { Name = "", EstimatedHours = 0 };
+            return await _context.Tasks.FindAsync(id);
         }
     }
 }

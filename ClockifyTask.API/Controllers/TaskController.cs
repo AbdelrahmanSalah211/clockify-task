@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ClockifyTask.Application.DTOs;
 using ClockifyTask.Application.Interfaces;
-using ClockifyTask.Application.DTOs.Task_Dto;
 
 namespace ClockifyTask.API.Controllers
 {

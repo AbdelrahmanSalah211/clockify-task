@@ -20,10 +20,10 @@ namespace ClockifyTask.Infrastructure.Persistence
             return timeEntry;
         }
 
-        public async Task<TimeEntry> SaveChangesAsync()
+        public async Task<TimeEntry?> SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
-            return _context.TimeEntries.Local.FirstOrDefault() ?? new TimeEntry();
+            return _context.TimeEntries.Local.FirstOrDefault();
         }
 
         public async Task<IEnumerable<TimeEntry>> GetAllForReportAsync()
