@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using ClockifyTask.Domain.Entities;
 using ClockifyTask.Application.Interfaces;
+using ClockifyTask.Application.DTOs;
 
 namespace ClockifyTask.Infrastructure.Providers;
 public class ClockifyApiProvider : ITrackingApiProvider
