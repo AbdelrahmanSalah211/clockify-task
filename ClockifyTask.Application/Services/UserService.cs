@@ -8,10 +8,12 @@ namespace ClockifyTask.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<UserDto> CreateAsync(CreateUserDto userDto)
@@ -23,6 +25,7 @@ namespace ClockifyTask.Application.Services
             };
 
             var result = await _userRepository.CreateAsync(user);
+            await _unitOfWork.SaveChangesAsync();
             return MapToDto(result);
         }
 

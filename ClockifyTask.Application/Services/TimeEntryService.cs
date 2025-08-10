@@ -7,16 +7,12 @@ namespace ClockifyTask.Application.Services
 {
     public class TimeEntryService : ITimeEntryService
     {
-        private readonly ITimeEntryRepository _timeEntryRepository;
-        private readonly ITaskRepository _taskRepository;
-        private readonly IProjectRepository _projectRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ITrackingApiProvider _trackingApiProvider;
 
-        public TimeEntryService(ITimeEntryRepository timeEntryRepository, ITaskRepository taskRepository, IProjectRepository projectRepo, ITrackingApiProvider trackingApiService)
+        public TimeEntryService(IUnitOfWork unitOfWork, ITrackingApiProvider trackingApiService)
         {
-            _timeEntryRepository = timeEntryRepository;
-            _taskRepository = taskRepository;
-            _projectRepo = projectRepo;
+            _unitOfWork = unitOfWork;
             _trackingApiProvider = trackingApiService;
         }
 
@@ -31,15 +27,16 @@ namespace ClockifyTask.Application.Services
                 ProjectId = timeEntryDto.ProjectId
             };
 
-            await _timeEntryRepository.CreateTimeEntryAsync(timeEntry);
-            
-            var task = await _taskRepository.GetByIdAsync(timeEntry.TaskId);
+            await _unitOfWork.TimeEntries.CreateTimeEntryAsync(timeEntry);
+
+            var task = await _unitOfWork.Tasks.GetByIdAsync(timeEntry.TaskId);
             if (task?.ClockifyTaskId == null)
             {
                 throw new Exception("Cannot sync time entry to Clockify. Missing Clockify Task ID.");
             }
             
-            var project = await _projectRepo.GetByIdAsync(task.ProjectId);
+            var project = await _unitOfWork.Projects.GetByIdAsync(task.ProjectId);
+
             if (project?.ClockifyId == null)
             {
                 throw new Exception("Cannot sync time entry to Clockify. Missing Clockify Project ID.");
@@ -53,9 +50,9 @@ namespace ClockifyTask.Application.Services
                 taskId = task.ClockifyTaskId,
             };
             timeEntry.ClockifyTimeEntryId = await _trackingApiProvider.CreateTrackingTimeEntryAsync(timeEntryTracking);
-            var result = await _timeEntryRepository.SaveChangesAsync();
-            
-            return MapToDto(result);
+            await _unitOfWork.SaveChangesAsync();
+
+            return MapToDto(timeEntry);
         }
 
         private static TimeEntryDto MapToDto(TimeEntry timeEntry)

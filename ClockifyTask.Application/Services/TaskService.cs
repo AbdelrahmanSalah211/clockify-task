@@ -10,10 +10,12 @@ namespace ClockifyTask.Application.Services
         private readonly ITaskRepository _taskRepository;
         private readonly IProjectRepository _projectRepo;
         private readonly IUserRepository _userRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ITrackingApiProvider _trackingApiProvider;
 
-        public TaskService(ITaskRepository taskRepository, IProjectRepository projectRepo, IUserRepository userRepo, ITrackingApiProvider trackingApiService)
+        public TaskService(IUnitOfWork unitOfWork, ITaskRepository taskRepository, IProjectRepository projectRepo, IUserRepository userRepo, ITrackingApiProvider trackingApiService)
         {
+            _unitOfWork = unitOfWork;
             _taskRepository = taskRepository;
             _projectRepo = projectRepo;
             _userRepo = userRepo;
@@ -52,9 +54,8 @@ namespace ClockifyTask.Application.Services
                 assigneeIds = new List<string> { user.ClockifyUserId }
             };
             task.ClockifyTaskId = await _trackingApiProvider.CreateTrackingTaskAsync(taskTracking);
-            var result = await _taskRepository.SaveChangesAsync();
-            
-            return MapToDto(result);
+            await _unitOfWork.SaveChangesAsync();
+            return MapToDto(task);
         }
 
         private static TaskDto MapToDto(Task task)
