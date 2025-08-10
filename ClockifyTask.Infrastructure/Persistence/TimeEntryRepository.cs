@@ -13,17 +13,10 @@ namespace ClockifyTask.Infrastructure.Persistence
             _context = context;
         }
 
-        public async Task<TimeEntry> CreateTimeEntryAsync(TimeEntry timeEntry)
+        public Task<TimeEntry> CreateTimeEntrySync(TimeEntry timeEntry)
         {
             _context.TimeEntries.Add(timeEntry);
-            await _context.SaveChangesAsync();
-            return timeEntry;
-        }
-
-        public async Task<TimeEntry?> SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
-            return _context.TimeEntries.Local.FirstOrDefault();
+            return System.Threading.Tasks.Task.FromResult(timeEntry);
         }
 
         public async Task<IEnumerable<TimeEntry>> GetAllForReportAsync()
