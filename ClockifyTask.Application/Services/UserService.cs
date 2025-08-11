@@ -16,17 +16,24 @@ namespace ClockifyTask.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UserDto> CreateAsync(CreateUserDto userDto)
+        public async Task<UserDto> CreateAsync(string clockifyId, CreateUserDto userDto)
         {
             var user = new User
             {
                 Name = userDto.Name,
-                ClockifyUserId = userDto.ClockifyUserId
+                ClockifyUserId = clockifyId
             };
 
             var result = await _userRepository.CreateUserSync(user);
             await _unitOfWork.SaveChangesAsync();
             return MapToDto(result);
+        }
+
+
+        public async Task<IEnumerable<UserDto>> GetAllAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+            return users.Select(MapToDto);
         }
 
         private static UserDto MapToDto(User user)

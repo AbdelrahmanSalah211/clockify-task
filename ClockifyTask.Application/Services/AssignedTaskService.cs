@@ -8,39 +8,39 @@ namespace ClockifyTask.Application.Services
     public class AssignedTaskService : IAssignedTaskService
     {
         private readonly IAssignedTaskRepository _taskRepository;
-        private readonly IProjectRepository _projectRepo;
-        private readonly IUserRepository _userRepo;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITrackingApiProvider _trackingApiProvider;
 
-        public AssignedTaskService(IUnitOfWork unitOfWork, IAssignedTaskRepository taskRepository, IProjectRepository projectRepo, IUserRepository userRepo, ITrackingApiProvider trackingApiService)
+        public AssignedTaskService(IUnitOfWork unitOfWork, IAssignedTaskRepository taskRepository, IProjectRepository projectRepository, IUserRepository userRepository, ITrackingApiProvider trackingApiProvider)
         {
             _unitOfWork = unitOfWork;
             _taskRepository = taskRepository;
-            _projectRepo = projectRepo;
-            _userRepo = userRepo;
-            _trackingApiProvider = trackingApiService;
+            _projectRepository = projectRepository;
+            _userRepository = userRepository;
+            _trackingApiProvider = trackingApiProvider;
         }
 
-        public async Task<AssignedTaskDto> CreateAsync(CreateAssignedTaskDto taskDto)
+        public async Task<AssignedTaskDto> CreateAsync(int projectId, int userId, CreateAssignedTaskDto taskDto)
         {
             var task = new AssignedTask
             {
                 Name = taskDto.Name,
                 EstimatedHours = taskDto.EstimatedHours,
-                UserId = taskDto.UserId,
-                ProjectId = taskDto.ProjectId
+                UserId = userId,
+                ProjectId = projectId
             };
 
             await _taskRepository.CreateTaskSync(task);
-            
-            var project = await _projectRepo.GetByIdAsync(task.ProjectId);
+
+            var project = await _projectRepository.GetByIdAsync(task.ProjectId);
             if (project?.ClockifyId == null)
             {
                 throw new Exception("Cannot sync task to Clockify. Missing Clockify Project ID.");
             }
 
-            var user = await _userRepo.GetByIdAsync(task.UserId);
+            var user = await _userRepository.GetByIdAsync(task.UserId);
             if (user?.ClockifyUserId == null)
             {
                 throw new Exception("Cannot sync task to Clockify. Missing Clockify User ID.");
@@ -56,6 +56,12 @@ namespace ClockifyTask.Application.Services
             task.ClockifyTaskId = await _trackingApiProvider.CreateTrackingTaskAsync(taskTracking);
             await _unitOfWork.SaveChangesAsync();
             return MapToDto(task);
+        }
+
+        public async Task<IEnumerable<AssignedTaskDto>> GetAllAsync()
+        {
+            var tasks = await _taskRepository.GetAllAsync();
+            return tasks.Select(MapToDto);
         }
 
         private static AssignedTaskDto MapToDto(AssignedTask task)

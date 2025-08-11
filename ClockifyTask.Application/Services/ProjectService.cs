@@ -38,6 +38,12 @@ namespace ClockifyTask.Application.Services
             return MapToDto(project);
         }
 
+        public async Task<IEnumerable<ProjectDto>> GetAllProjectsAsync()
+        {
+            var projects = await _projectRepository.GetAllAsync();
+            return projects.Select(MapToDto);
+        }
+
         private static ProjectDto MapToDto(Project project)
         {
             return new ProjectDto

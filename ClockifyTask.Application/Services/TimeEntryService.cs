@@ -22,15 +22,15 @@ namespace ClockifyTask.Application.Services
             _trackingApiProvider = trackingApiService;
         }
 
-        public async Task<TimeEntryDto> CreateAsync(CreateTimeEntryDto timeEntryDto)
+        public async Task<TimeEntryDto> CreateAsync(int projectId, int assignedTaskId, int userId, CreateTimeEntryDto timeEntryDto)
         {
             var timeEntry = new TimeEntry
             {
                 Start = timeEntryDto.Start,
                 End = timeEntryDto.End,
-                UserId = timeEntryDto.UserId,
-                AssignedTaskId = timeEntryDto.AssignedTaskId,
-                ProjectId = timeEntryDto.ProjectId
+                UserId = userId,
+                AssignedTaskId = assignedTaskId,
+                ProjectId = projectId
             };
 
             await _timeEntryRepository.CreateTimeEntrySync(timeEntry);
