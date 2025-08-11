@@ -13,11 +13,10 @@ namespace ClockifyTask.Infrastructure.Persistence
             _context = context;
         }
 
-        public async Task<User> CreateAsync(User user)
+        public Task<User> CreateUserSync(User user)
         {
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return user;
+            return System.Threading.Tasks.Task.FromResult(user);
         }
 
         public async Task<User?> GetByIdAsync(int id)

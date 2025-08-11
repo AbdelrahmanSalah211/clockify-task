@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ClockifyTask.Application\ClockifyTask.Application.csproj" />
     <ProjectReference Include="..\ClockifyTask.Infrastructure\ClockifyTask.Infrastructure.csproj" />
   </ItemGroup>
 

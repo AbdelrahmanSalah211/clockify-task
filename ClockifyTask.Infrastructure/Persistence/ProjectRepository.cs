@@ -13,17 +13,10 @@ namespace ClockifyTask.Infrastructure.Persistence
             _context = context;
         }
 
-        public async Task<Project> CreateProjectAsync(Project project)
+        public Task<Project> CreateProjectSync(Project project)
         {
             _context.Projects.Add(project);
-            await _context.SaveChangesAsync();
-            return project;
-        }
-
-        public async Task<Project?> SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
-            return _context.Projects.Local.FirstOrDefault();
+            return Task.FromResult(project);
         }
 
         public async Task<Project?> GetByIdAsync(int id)

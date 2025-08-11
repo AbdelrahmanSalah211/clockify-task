@@ -1,28 +1,30 @@
 using ClockifyTask.Application.DTOs;
 using ClockifyTask.Application.Interfaces;
+using ClockifyTask.Domain.Entities;
 using ClockifyTask.Domain.Interfaces;
-using Task = ClockifyTask.Domain.Entities.Task;
 
 namespace ClockifyTask.Application.Services
 {
-    public class TaskService : ITaskService
+    public class AssignedTaskService : IAssignedTaskService
     {
-        private readonly ITaskRepository _taskRepository;
+        private readonly IAssignedTaskRepository _taskRepository;
         private readonly IProjectRepository _projectRepo;
         private readonly IUserRepository _userRepo;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ITrackingApiProvider _trackingApiProvider;
 
-        public TaskService(ITaskRepository taskRepository, IProjectRepository projectRepo, IUserRepository userRepo, ITrackingApiProvider trackingApiService)
+        public AssignedTaskService(IUnitOfWork unitOfWork, IAssignedTaskRepository taskRepository, IProjectRepository projectRepo, IUserRepository userRepo, ITrackingApiProvider trackingApiService)
         {
+            _unitOfWork = unitOfWork;
             _taskRepository = taskRepository;
             _projectRepo = projectRepo;
             _userRepo = userRepo;
             _trackingApiProvider = trackingApiService;
         }
 
-        public async Task<TaskDto> CreateAsync(CreateTaskDto taskDto)
+        public async Task<AssignedTaskDto> CreateAsync(CreateAssignedTaskDto taskDto)
         {
-            var task = new Task
+            var task = new AssignedTask
             {
                 Name = taskDto.Name,
                 EstimatedHours = taskDto.EstimatedHours,
@@ -30,7 +32,7 @@ namespace ClockifyTask.Application.Services
                 ProjectId = taskDto.ProjectId
             };
 
-            await _taskRepository.CreateTaskAsync(task);
+            await _taskRepository.CreateTaskSync(task);
             
             var project = await _projectRepo.GetByIdAsync(task.ProjectId);
             if (project?.ClockifyId == null)
@@ -52,14 +54,13 @@ namespace ClockifyTask.Application.Services
                 assigneeIds = new List<string> { user.ClockifyUserId }
             };
             task.ClockifyTaskId = await _trackingApiProvider.CreateTrackingTaskAsync(taskTracking);
-            var result = await _taskRepository.SaveChangesAsync();
-            
-            return MapToDto(result);
+            await _unitOfWork.SaveChangesAsync();
+            return MapToDto(task);
         }
 
-        private static TaskDto MapToDto(Task task)
+        private static AssignedTaskDto MapToDto(AssignedTask task)
         {
-            return new TaskDto
+            return new AssignedTaskDto
             {
                 Id = task.Id,
                 Name = task.Name,

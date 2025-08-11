@@ -1,6 +1,6 @@
 namespace ClockifyTask.Domain.Entities
 {
-    public class Task
+    public class AssignedTask
     {
         public int Id { get; set; }
         public required string Name { get; set; }

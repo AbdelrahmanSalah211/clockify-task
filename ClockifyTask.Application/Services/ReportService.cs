@@ -19,13 +19,13 @@ namespace ClockifyTask.Application.Services
             var timeEntries = await _timeEntryRepository.GetAllForReportAsync();
 
             var records = timeEntries
-                .Where(te => te.User != null && te.Task != null && te.Task.Project != null)
+                .Where(te => te.User != null && te.AssignedTask != null && te.AssignedTask.Project != null)
                 .Select(te => new TimeEntryCsvRecord
                 {
                     UserName = te.User!.Name,
-                    ProjectName = te.Task!.Project!.Name,
-                    TaskName = te.Task.Name,
-                    OriginalEstimate = te.Task.EstimatedHours,
+                    ProjectName = te.AssignedTask!.Project!.Name,
+                    TaskName = te.AssignedTask.Name,
+                    OriginalEstimate = te.AssignedTask.EstimatedHours,
                     TimeSpent = Math.Round((te.End - te.Start).TotalHours, 2)
                 })
                 .ToList();
