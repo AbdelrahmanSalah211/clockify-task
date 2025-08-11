@@ -23,5 +23,10 @@ namespace ClockifyTask.Infrastructure.Persistence
         {
             return await _context.Projects.FindAsync(id);
         }
+
+        public async Task<IEnumerable<Project>> GetAllAsync()
+        {
+            return await _context.Projects.ToListAsync();
+        }
     }
 }
