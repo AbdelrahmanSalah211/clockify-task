@@ -5,7 +5,7 @@ using ClockifyTask.Application.Interfaces;
 namespace ClockifyTask.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -15,16 +15,23 @@ namespace ClockifyTask.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<UserDto>> Create(CreateUserDto userDto)
+        [HttpPost("{clockifyId}")]
+        public async Task<ActionResult<UserDto>> Create(string clockifyId, CreateUserDto userDto)
         {
             if (userDto == null || string.IsNullOrEmpty(userDto.Name))
             {
                 return BadRequest("Invalid user data.");
             }
 
-            var createdUser = await _userService.CreateAsync(userDto);
+            var createdUser = await _userService.CreateAsync(clockifyId, userDto);
             return CreatedAtAction(nameof(Create), new { id = createdUser.Id }, createdUser);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        {
+            var users = await _userService.GetAllAsync();
+            return Ok(users);
         }
     }
 }
