@@ -5,7 +5,7 @@ using ClockifyTask.Application.Interfaces;
 namespace ClockifyTask.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/assignedTasks")]
     public class AssignedTaskController : ControllerBase
     {
         private readonly IAssignedTaskService _assignedTaskService;
@@ -15,16 +15,23 @@ namespace ClockifyTask.API.Controllers
             _assignedTaskService = assignedTaskService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<AssignedTaskDto>> Create(CreateAssignedTaskDto assignedTaskDto)
+        [HttpPost("projects/{projectId:int}/users/{userId:int}")]
+        public async Task<ActionResult<AssignedTaskDto>> Create(int projectId, int userId, CreateAssignedTaskDto assignedTaskDto)
         {
             if (assignedTaskDto == null || string.IsNullOrEmpty(assignedTaskDto.Name))
             {
                 return BadRequest("Invalid task data.");
             }
 
-            var createdTask = await _assignedTaskService.CreateAsync(assignedTaskDto);
+            var createdTask = await _assignedTaskService.CreateAsync(projectId, userId, assignedTaskDto);
             return CreatedAtAction(nameof(Create), new { id = createdTask.Id }, createdTask);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AssignedTaskDto>>> GetAll()
+        {
+            var tasks = await _assignedTaskService.GetAllAsync();
+            return Ok(tasks);
         }
     }
 }
