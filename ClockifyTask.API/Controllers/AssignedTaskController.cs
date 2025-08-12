@@ -9,22 +9,12 @@ namespace ClockifyTask.API.Controllers
     public class AssignedTaskController : ControllerBase
     {
         private readonly IAssignedTaskService _assignedTaskService;
+        private readonly ITimeEntryService _timeEntryService;
 
-        public AssignedTaskController(IAssignedTaskService assignedTaskService)
+        public AssignedTaskController(IAssignedTaskService assignedTaskService, ITimeEntryService timeEntryService)
         {
             _assignedTaskService = assignedTaskService;
-        }
-
-        [HttpPost("projects/{projectId:int}/users/{userId:int}")]
-        public async Task<ActionResult<AssignedTaskDto>> Create(int projectId, int userId, CreateAssignedTaskDto assignedTaskDto)
-        {
-            if (assignedTaskDto == null || string.IsNullOrEmpty(assignedTaskDto.Name))
-            {
-                return BadRequest("Invalid task data.");
-            }
-
-            var createdTask = await _assignedTaskService.CreateAsync(projectId, userId, assignedTaskDto);
-            return CreatedAtAction(nameof(Create), new { id = createdTask.Id }, createdTask);
+            _timeEntryService = timeEntryService;
         }
 
         [HttpGet]
@@ -32,6 +22,18 @@ namespace ClockifyTask.API.Controllers
         {
             var tasks = await _assignedTaskService.GetAllAsync();
             return Ok(tasks);
+        }
+
+        [HttpPost("{assignedTaskId:int}/timeEntries")]
+        public async Task<ActionResult<TimeEntryDto>> Create(int assignedTaskId, CreateTimeEntryDto timeEntryDto)
+        {
+            if (timeEntryDto == null)
+            {
+                return BadRequest("Invalid time entry data.");
+            }
+
+            var createdTimeEntry = await _timeEntryService.CreateAsync(assignedTaskId, timeEntryDto);
+            return CreatedAtAction(nameof(Create), new { id = createdTimeEntry.Id }, createdTimeEntry);
         }
     }
 }
