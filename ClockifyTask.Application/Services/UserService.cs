@@ -16,24 +16,23 @@ namespace ClockifyTask.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UserDto> CreateAsync(CreateUserDto userDto)
+        public async Task<UserDto> UpdateAsync(int userId, UpdateUserDto userDto)
         {
-            var user = new User
-            {
-                Name = userDto.Name,
-                ClockifyUserId = userDto.ClockifyUserId
-            };
+            var user = await _userRepository.GetByIdAsync(userId) ?? throw new KeyNotFoundException("User not found.");
 
-            var result = await _userRepository.CreateUserSync(user);
+            user.Name = userDto.Name ?? user.Name;
+            user.Email = userDto.Email ?? user.Email;
+            user.ClockifyUserId = userDto.ClockifyUserId ?? user.ClockifyUserId;
+
             await _unitOfWork.SaveChangesAsync();
-            return MapToDto(result);
+            return MapToDto(user);
         }
 
 
-        public async Task<IEnumerable<UserDto>> GetAllAsync()
+        public async Task<IEnumerable<object>> GetAllAsync()
         {
             var users = await _userRepository.GetAllAsync();
-            return users.Select(MapToDto);
+            return users;
         }
 
         private static UserDto MapToDto(User user)
@@ -42,6 +41,7 @@ namespace ClockifyTask.Application.Services
             {
                 Id = user.Id,
                 Name = user.Name,
+                Email = user.Email,
                 ClockifyUserId = user.ClockifyUserId
             };
         }
