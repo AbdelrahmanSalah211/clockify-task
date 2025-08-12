@@ -16,12 +16,12 @@ namespace ClockifyTask.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UserDto> CreateAsync(string clockifyId, CreateUserDto userDto)
+        public async Task<UserDto> CreateAsync(CreateUserDto userDto)
         {
             var user = new User
             {
                 Name = userDto.Name,
-                ClockifyUserId = clockifyId
+                ClockifyUserId = userDto.ClockifyUserId
             };
 
             var result = await _userRepository.CreateUserSync(user);

@@ -15,15 +15,15 @@ namespace ClockifyTask.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost("{clockifyId}")]
-        public async Task<ActionResult<UserDto>> Create(string clockifyId, CreateUserDto userDto)
+        [HttpPost]
+        public async Task<ActionResult<UserDto>> Create(CreateUserDto userDto)
         {
             if (userDto == null || string.IsNullOrEmpty(userDto.Name))
             {
                 return BadRequest("Invalid user data.");
             }
 
-            var createdUser = await _userService.CreateAsync(clockifyId, userDto);
+            var createdUser = await _userService.CreateAsync(userDto);
             return CreatedAtAction(nameof(Create), new { id = createdUser.Id }, createdUser);
         }
 
