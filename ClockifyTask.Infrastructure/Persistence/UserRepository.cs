@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ClockifyTask.Domain.Entities;
 using ClockifyTask.Domain.Interfaces;
+using ClockifyTask.Application.DTOs;
 
 namespace ClockifyTask.Infrastructure.Persistence
 {
@@ -24,9 +25,20 @@ namespace ClockifyTask.Infrastructure.Persistence
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<User?> GetByEmailAsync(string email)
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
+        public async Task<IEnumerable<object>> GetAllAsync()
+        {
+            return await _context.Users.Select(user => new UserDto
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                ClockifyUserId = user.ClockifyUserId
+            }).ToListAsync();
         }
     }
 }
