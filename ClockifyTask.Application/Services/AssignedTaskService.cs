@@ -22,13 +22,13 @@ namespace ClockifyTask.Application.Services
             _trackingApiProvider = trackingApiProvider;
         }
 
-        public async Task<AssignedTaskDto> CreateAsync(int projectId, int userId, CreateAssignedTaskDto taskDto)
+        public async Task<AssignedTaskDto> CreateAsync(int projectId, CreateAssignedTaskDto taskDto)
         {
             var task = new AssignedTask
             {
                 Name = taskDto.Name,
                 EstimatedHours = taskDto.EstimatedHours,
-                UserId = userId,
+                UserId = taskDto.UserId,
                 ProjectId = projectId
             };
 
