@@ -22,15 +22,15 @@ namespace ClockifyTask.Application.Services
             _trackingApiProvider = trackingApiService;
         }
 
-        public async Task<TimeEntryDto> CreateAsync(int projectId, int assignedTaskId, int userId, CreateTimeEntryDto timeEntryDto)
+        public async Task<TimeEntryDto> CreateAsync(int assignedTaskId, CreateTimeEntryDto timeEntryDto)
         {
             var timeEntry = new TimeEntry
             {
                 Start = timeEntryDto.Start,
                 End = timeEntryDto.End,
-                UserId = userId,
+                UserId = timeEntryDto.UserId,
                 AssignedTaskId = assignedTaskId,
-                ProjectId = projectId
+                ProjectId = timeEntryDto.ProjectId
             };
 
             await _timeEntryRepository.CreateTimeEntrySync(timeEntry);
@@ -59,6 +59,12 @@ namespace ClockifyTask.Application.Services
             await _unitOfWork.SaveChangesAsync();
 
             return MapToDto(timeEntry);
+        }
+
+        public async Task<IEnumerable<TimeEntryDto>> GetAllAsync()
+        {
+            var timeEntries = await _timeEntryRepository.GetAllAsync();
+            return timeEntries.Select(MapToDto);
         }
 
         private static TimeEntryDto MapToDto(TimeEntry timeEntry)
