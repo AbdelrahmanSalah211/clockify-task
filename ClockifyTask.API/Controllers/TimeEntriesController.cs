@@ -15,16 +15,11 @@ namespace ClockifyTask.API.Controllers
             _timeEntryService = timeEntryService;
         }
 
-        [HttpPost("projects/{projectId:int}/assignedTasks/{assignedTaskId:int}/users/{userId:int}")]
-        public async Task<ActionResult<TimeEntryDto>> Create(int projectId, int assignedTaskId, int userId, CreateTimeEntryDto timeEntryDto)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TimeEntryDto>>> GetAll()
         {
-            if (timeEntryDto == null)
-            {
-                return BadRequest("Invalid time entry data.");
-            }
-
-            var createdTimeEntry = await _timeEntryService.CreateAsync(projectId, assignedTaskId, userId, timeEntryDto);
-            return CreatedAtAction(nameof(Create), new { id = createdTimeEntry.Id }, createdTimeEntry);
+            var timeEntries = await _timeEntryService.GetAllAsync();
+            return Ok(timeEntries);
         }
     }
 }
