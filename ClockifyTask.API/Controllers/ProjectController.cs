@@ -9,10 +9,12 @@ namespace ClockifyTask.API.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
+        private readonly IAssignedTaskService _assignedTaskService;
 
-        public ProjectController(IProjectService projectService)
+        public ProjectController(IProjectService projectService, IAssignedTaskService assignedTaskService)
         {
             _projectService = projectService;
+            _assignedTaskService = assignedTaskService;
         }
 
         [HttpPost]
@@ -32,6 +34,18 @@ namespace ClockifyTask.API.Controllers
         {
             var projects = await _projectService.GetAllProjectsAsync();
             return Ok(projects);
+        }
+
+        [HttpPost("{projectId:int}/assignedTasks")]
+        public async Task<ActionResult<AssignedTaskDto>> Create(int projectId, CreateAssignedTaskDto assignedTaskDto)
+        {
+            if (assignedTaskDto == null || string.IsNullOrEmpty(assignedTaskDto.Name))
+            {
+                return BadRequest("Invalid task data.");
+            }
+
+            var createdTask = await _assignedTaskService.CreateAsync(projectId, assignedTaskDto);
+            return CreatedAtAction(nameof(Create), new { id = createdTask.Id }, createdTask);
         }
     }
 }
