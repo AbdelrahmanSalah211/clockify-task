@@ -27,5 +27,10 @@ namespace ClockifyTask.Infrastructure.Persistence
                 .ThenInclude(assignedTask => assignedTask!.Project)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<TimeEntry>> GetAllAsync()
+        {
+            return await _context.TimeEntries.ToListAsync();
+        }
     }
 }
