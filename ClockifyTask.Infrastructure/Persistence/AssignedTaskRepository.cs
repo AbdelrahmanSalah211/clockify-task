@@ -19,8 +19,9 @@ namespace ClockifyTask.Infrastructure.Persistence
             return Task.FromResult(task);
         }
 
-        public async Task<AssignedTask?> GetByIdAsync(int id)
+        public async Task<AssignedTask?> GetByIdAsync(int? id)
         {
+            if (id == null) return null;
             return await _context.AssignedTasks.FindAsync(id);
         }
 
