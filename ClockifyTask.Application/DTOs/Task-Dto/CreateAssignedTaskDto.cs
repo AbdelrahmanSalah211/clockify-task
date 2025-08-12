@@ -4,5 +4,6 @@ namespace ClockifyTask.Application.DTOs
     {
         public required string Name { get; init; }
         public required int EstimatedHours { get; init; }
+        public required int UserId { get; init; }
     }
 }
