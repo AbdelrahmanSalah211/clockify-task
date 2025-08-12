@@ -5,7 +5,7 @@ using ClockifyTask.Application.Interfaces;
 namespace ClockifyTask.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -25,6 +25,13 @@ namespace ClockifyTask.API.Controllers
 
             var createdUser = await _userService.CreateAsync(userDto);
             return CreatedAtAction(nameof(Create), new { id = createdUser.Id }, createdUser);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        {
+            var users = await _userService.GetAllAsync();
+            return Ok(users);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace ClockifyTask.Domain.Interfaces
     public interface IAssignedTaskRepository
     {
         Task<AssignedTask> CreateTaskSync(AssignedTask task);
-        Task<AssignedTask?> GetByIdAsync(int id);
+        Task<AssignedTask?> GetByIdAsync(int? id);
+        Task<IEnumerable<AssignedTask>> GetAllAsync();
     }
 }

@@ -29,6 +29,13 @@ namespace ClockifyTask.Application.Services
             return MapToDto(result);
         }
 
+
+        public async Task<IEnumerable<UserDto>> GetAllAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+            return users.Select(MapToDto);
+        }
+
         private static UserDto MapToDto(User user)
         {
             return new UserDto

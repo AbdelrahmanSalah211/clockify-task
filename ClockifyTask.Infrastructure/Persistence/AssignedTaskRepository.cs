@@ -1,5 +1,6 @@
 using ClockifyTask.Domain.Interfaces;
 using ClockifyTask.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClockifyTask.Infrastructure.Persistence
 {
@@ -18,9 +19,15 @@ namespace ClockifyTask.Infrastructure.Persistence
             return Task.FromResult(task);
         }
 
-        public async Task<AssignedTask?> GetByIdAsync(int id)
+        public async Task<AssignedTask?> GetByIdAsync(int? id)
         {
+            if (id == null) return null;
             return await _context.AssignedTasks.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<AssignedTask>> GetAllAsync()
+        {
+            return await _context.AssignedTasks.ToListAsync();
         }
     }
 }

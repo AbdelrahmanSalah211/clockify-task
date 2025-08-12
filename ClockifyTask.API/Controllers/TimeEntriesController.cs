@@ -5,7 +5,7 @@ using ClockifyTask.Application.Interfaces;
 namespace ClockifyTask.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/timeEntries")]
     public class TimeEntriesController : ControllerBase
     {
         private readonly ITimeEntryService _timeEntryService;
@@ -15,16 +15,11 @@ namespace ClockifyTask.API.Controllers
             _timeEntryService = timeEntryService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<TimeEntryDto>> Create(CreateTimeEntryDto timeEntryDto)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TimeEntryDto>>> GetAll()
         {
-            if (timeEntryDto == null)
-            {
-                return BadRequest("Invalid time entry data.");
-            }
-
-            var createdTimeEntry = await _timeEntryService.CreateAsync(timeEntryDto);
-            return CreatedAtAction(nameof(Create), new { id = createdTimeEntry.Id }, createdTimeEntry);
+            var timeEntries = await _timeEntryService.GetAllAsync();
+            return Ok(timeEntries);
         }
     }
 }

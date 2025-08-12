@@ -6,5 +6,6 @@ namespace ClockifyTask.Domain.Interfaces
     {
         Task<TimeEntry> CreateTimeEntrySync(TimeEntry timeEntry);
         Task<IEnumerable<TimeEntry>> GetAllForReportAsync();
+        Task<IEnumerable<TimeEntry>> GetAllAsync();
     }
 }

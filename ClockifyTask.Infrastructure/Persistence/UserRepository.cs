@@ -16,12 +16,17 @@ namespace ClockifyTask.Infrastructure.Persistence
         public Task<User> CreateUserSync(User user)
         {
             _context.Users.Add(user);
-            return System.Threading.Tasks.Task.FromResult(user);
+            return Task.FromResult(user);
         }
 
         public async Task<User?> GetByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<User>> GetAllAsync()
+        {
+            return await _context.Users.ToListAsync();
         }
     }
 }
