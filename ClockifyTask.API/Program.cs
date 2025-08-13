@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using ClockifyTask.Application.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,7 +53,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITimeEntryRepository, TimeEntryRepository>();
 builder.Services.AddScoped<IAssignedTaskRepository, AssignedTaskRepository>();
 
-// Application Services
+// Application 
+builder.Services.AddScoped<IPasswordHandling, PasswordHandling>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
