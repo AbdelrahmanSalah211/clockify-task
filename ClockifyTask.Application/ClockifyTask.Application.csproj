@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClockifyTask.Domain\ClockifyTask.Domain.csproj" />
+    <ProjectReference Include="..\ClockifyTask.Utilities\ClockifyTask.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -9,8 +10,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.2.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.0" />
   </ItemGroup>
 
   <PropertyGroup>

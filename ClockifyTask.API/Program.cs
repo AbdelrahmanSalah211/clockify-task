@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using ClockifyTask.Application.Security;
+using ClockifyTask.Utilities.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +57,7 @@ builder.Services.AddScoped<IAssignedTaskRepository, AssignedTaskRepository>();
 // Application 
 builder.Services.AddScoped<IPasswordHandling, PasswordHandling>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IJwtUtility, JwtUtility>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITimeEntryService, TimeEntryService>();

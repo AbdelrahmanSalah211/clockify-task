@@ -3,6 +3,7 @@ using ClockifyTask.Application.Interfaces;
 using ClockifyTask.Domain.Interfaces;
 using ClockifyTask.Application.Security;
 using ClockifyTask.Domain.Entities;
+using ClockifyTask.Utilities.Authentication;
 
 namespace ClockifyTask.Application.Services
 {
@@ -11,17 +12,17 @@ namespace ClockifyTask.Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHandling _passwordHandling;
-        private readonly IJwtService _jwtService;
+        private readonly IJwtUtility _jwtUtility;
         public AuthService(
             IUserRepository userRepository,
             IUnitOfWork unitOfWork,
-            IJwtService jwtService,
+            IJwtUtility jwtUtility,
             IPasswordHandling passwordHandling
         )
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
-            _jwtService = jwtService;
+            _jwtUtility = jwtUtility;
             _passwordHandling = passwordHandling;
         }
         public async Task<bool> RegisterAsync(RegisterDto registerDto)
@@ -68,7 +69,7 @@ namespace ClockifyTask.Application.Services
                 throw new ArgumentException("Invalid email or password.");
             }
 
-            var token = _jwtService.GenerateToken(user.Id, user.Email);
+            var token = _jwtUtility.GenerateToken(user.Id, user.Email);
 
             return new { userId = user.Id, email = user.Email, token };
         }

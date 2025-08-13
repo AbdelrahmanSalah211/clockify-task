@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ClockifyTask.Application\ClockifyTask.Application.csproj" />
     <ProjectReference Include="..\ClockifyTask.Infrastructure\ClockifyTask.Infrastructure.csproj" />
+    <ProjectReference Include="..\ClockifyTask.Utilities\ClockifyTask.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
