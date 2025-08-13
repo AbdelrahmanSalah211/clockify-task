@@ -6,6 +6,7 @@ namespace ClockifyTask.Domain.Interfaces
     {
         Task<User> CreateUserSync(User user);
         Task<User?> GetByIdAsync(int id);
-        Task<IEnumerable<User>> GetAllAsync();
+        Task<User?> GetByEmailAsync(string email);
+        Task<IEnumerable<object>> GetAllAsync();
     }
 }

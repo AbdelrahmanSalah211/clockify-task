@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using ClockifyTask.Application.DTOs;
 using ClockifyTask.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClockifyTask.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/users")]
     public class UsersController : ControllerBase
@@ -15,16 +17,11 @@ namespace ClockifyTask.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<UserDto>> Create(CreateUserDto userDto)
+        [HttpPatch("{userId:int}")]
+        public async Task<ActionResult<UserDto>> Update(int userId, UpdateUserDto userDto)
         {
-            if (userDto == null || string.IsNullOrEmpty(userDto.Name))
-            {
-                return BadRequest("Invalid user data.");
-            }
-
-            var createdUser = await _userService.CreateAsync(userDto);
-            return CreatedAtAction(nameof(Create), new { id = createdUser.Id }, createdUser);
+            var updatedUser = await _userService.UpdateAsync(userId, userDto);
+            return Ok(updatedUser);
         }
 
         [HttpGet]

@@ -20,6 +20,10 @@ namespace ClockifyTask.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
             
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
             // Project relationships
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.AssignedTasks)

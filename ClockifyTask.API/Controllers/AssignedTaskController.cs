@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using ClockifyTask.Application.DTOs;
 using ClockifyTask.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ClockifyTask.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/assignedTasks")]
     public class AssignedTaskController : ControllerBase
