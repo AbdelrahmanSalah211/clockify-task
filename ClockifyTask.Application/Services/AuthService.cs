@@ -1,7 +1,7 @@
 using ClockifyTask.Application.DTOs;
 using ClockifyTask.Application.Interfaces;
 using ClockifyTask.Domain.Interfaces;
-using ClockifyTask.Application.Utilities;
+using ClockifyTask.Application.Security;
 using ClockifyTask.Domain.Entities;
 
 namespace ClockifyTask.Application.Services
@@ -10,16 +10,19 @@ namespace ClockifyTask.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IPasswordHandling _passwordHandling;
         private readonly IJwtService _jwtService;
         public AuthService(
             IUserRepository userRepository,
             IUnitOfWork unitOfWork,
-            IJwtService jwtService
+            IJwtService jwtService,
+            IPasswordHandling passwordHandling
         )
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _jwtService = jwtService;
+            _passwordHandling = passwordHandling;
         }
         public async Task<bool> RegisterAsync(RegisterDto registerDto)
         {
@@ -34,7 +37,7 @@ namespace ClockifyTask.Application.Services
                 return false;
             }
 
-            var hashedPassword = PasswordHandling.HashPassword(registerDto.Password);
+            var hashedPassword = _passwordHandling.HashPassword(registerDto.Password);
             var user = new User
             {
                 Name = registerDto.Name,
@@ -59,7 +62,7 @@ namespace ClockifyTask.Application.Services
                 throw new ArgumentException("Invalid email or password.");
             }
 
-            var isPasswordValid = PasswordHandling.VerifyPassword(loginDto.Password, user.Password);
+            var isPasswordValid = _passwordHandling.VerifyPassword(loginDto.Password, user.Password);
             if (!isPasswordValid)
             {
                 throw new ArgumentException("Invalid email or password.");

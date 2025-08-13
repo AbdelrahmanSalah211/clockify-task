@@ -1,19 +1,20 @@
 using Microsoft.AspNetCore.Identity;
 using ClockifyTask.Domain.Entities;
+using ClockifyTask.Application.Interfaces;
 
-namespace ClockifyTask.Application.Utilities
+namespace ClockifyTask.Application.Security
 {
-    public static class PasswordHandling
+    public class PasswordHandling : IPasswordHandling
     {
         private static readonly IPasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
 
-        public static string HashPassword(string password)
+        public string HashPassword(string password)
         {
             
             return _passwordHasher.HashPassword(null, password);
         }
 
-        public static bool VerifyPassword(string password, string hashedPassword)
+        public bool VerifyPassword(string password, string hashedPassword)
         {
             try
             {
